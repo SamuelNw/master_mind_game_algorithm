@@ -9,6 +9,7 @@ the correct answer after the tenth guess, it is presented to them.
 
 import collections
 import random
+from typing import List, Tuple
 
 # Constants
 COLORS = ["G", "Y", "R", "B", "P", "V", "W", "I", "O", "M"]
@@ -16,7 +17,7 @@ CODE_LENGTH = 4
 TRIES = 10
 
 
-def generate_code():
+def generate_code() -> List[str]:
     code = []
 
     for _ in range(CODE_LENGTH):
@@ -25,7 +26,7 @@ def generate_code():
     return code
 
 
-def get_user_guess():
+def get_user_guess() -> List[str]:
 
     while True:
         guess = input(
@@ -46,8 +47,7 @@ def get_user_guess():
     return guess
 
 
-def check_code(user_code, generated_code):
-    color_counts = {}
+def check_code(user_code, generated_code) -> Tuple[int]:
     correct_pos, incorrect_pos = 0, 0
 
     """
@@ -94,7 +94,7 @@ def check_code(user_code, generated_code):
     return correct_pos, incorrect_pos
 
 
-def game():
+def game() -> None:
     print(
         f"Welcome to mastermind. You have {TRIES} tries to get the correct answer. Goodluck...")
     print("The valid colors are: ", " ".join(x for x in COLORS))
