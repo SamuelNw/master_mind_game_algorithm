@@ -7,6 +7,7 @@ The user is allowed to guess a maximum of 10 times then if unable to generate
 the correct answer after the tenth guess, it is presented to them.
 """
 
+import collections
 import random
 
 # Constants
@@ -49,6 +50,7 @@ def check_code(user_code, generated_code):
     color_counts = {}
     correct_pos, incorrect_pos = 0, 0
 
+    """
     for color in generated_code:
         if color not in color_counts:
             color_counts[color] = 0
@@ -65,6 +67,29 @@ def check_code(user_code, generated_code):
             incorrect_pos += 1
             print(f"{user_color} in wrong pos")
             color_counts[user_color] -= 1
+
+    return correct_pos, incorrect_pos
+    """
+
+    # This block should fix the loopholes created by the commented out code above.
+    i, j = 0, 0
+    # To prevent manipulating the original code.
+    g_copy = generated_code[:]
+
+    while i < CODE_LENGTH:
+        if g_copy[j] == user_code[j]:
+            correct_pos += 1
+            g_copy.pop(j)
+            user_code.pop(j)
+        else:
+            j += 1
+        i += 1
+
+    count = collections.Counter(g_copy)
+    for choice in user_code:
+        if choice in count and count[choice] > 0:
+            incorrect_pos += 1
+            count[choice] -= 1
 
     return correct_pos, incorrect_pos
 
